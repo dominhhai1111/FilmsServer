@@ -8,18 +8,16 @@
 
 class Users extends CI_Controller
 {
-    public function __contructor()
+    public function __construct()
     {
-        parent::__contructor();
-        $this->load->model("User_model");
+        parent::__construct();
+        $this->load->model("user_model");
     }
 
     public function index()
     {
         $this->load->database();
-        $sql = "Select * from users";
-        $query = $this->db->query($sql);
-        $users = $query->result();
+        $users = $this->user_model->getAllUsers();
         $users_jsonencode = json_encode($users);
         echo $users_jsonencode;
     }

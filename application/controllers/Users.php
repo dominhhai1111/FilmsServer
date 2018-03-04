@@ -16,7 +16,6 @@ class Users extends CI_Controller
 
     public function index()
     {
-        $this->load->database();
         $users = $this->user_model->getAllUsers();
         $users_jsonencode = json_encode($users);
         echo $users_jsonencode;
@@ -32,20 +31,19 @@ class Users extends CI_Controller
         echo $users_jsonencode;
     }
 
-    public function checkUserAccount($email, $password)
+    public function checkLogin($email, $password)
     {
-
-
+        $users = $this->user_model->getAllUsers();
         // set result
         $result['user_id'] = 0;
-        $result['isCorrect'] = false;
+        $result['isLogin'] = false;
         $result['message'] = "Tài khoản không tồn tại";
 
         foreach($users as $user){
             if($email == $user->email){
                 if($password == $user->password){
                     $result['user_id'] = $user->id;
-                    $result['isCorrect'] = true;
+                    $result['isLogin'] = true;
                     $result['message'] = "Đăng nhập thành công";
                     break;
                 }else{
@@ -56,7 +54,7 @@ class Users extends CI_Controller
 
         // json-encode result
         $result_jsonencode = json_encode($result);
-        return $result_jsonencode;
+        echo $result_jsonencode;
     }
 
     public function registerUserAccount()

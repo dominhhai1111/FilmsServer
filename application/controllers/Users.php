@@ -59,6 +59,35 @@ class Users extends CI_Controller
 
     public function registerUserAccount()
     {
-
+        $this->load->helper('form');
+        $this->load->view("users/register_form");
     }
+
+    public function checkRegisterUserAccount()
+    {
+        $this->load->helper('url');
+
+        $users = $this->user_model->getAllUsers();
+        $email_input = $this->input->post("email");
+
+        $result['isRegisted'] = true;
+        $result['message'] = "Đăng ký thành công";
+
+        //check email exist
+        foreach($users as $user){
+            if($email_input == $user->email){
+                $result['isRegisted'] = false;
+                $result['message'] = "Địa chỉ mail đã tồn tại";
+                echo json_encode($result);
+            }
+        }
+
+        if($result['isRegisted']){
+            //insert new account
+            $this->user_model->createNewUser();
+
+            echo json_encode($result);
+        }
+    }
+
 }

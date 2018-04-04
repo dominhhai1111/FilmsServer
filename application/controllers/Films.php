@@ -8,6 +8,18 @@ class Films extends CI_Controller {
         return;
     }
 
+    public function getAllCats()
+    {
+        $this->load->database();
+        $sql = "Select * from categories";
+        $query = $this->db->query($sql);
+        $cats = $query->result();
+        $cats_jsonencode = json_encode($cats);
+        $cats_jsondecode = json_decode($cats_jsonencode);
+
+        echo $cats_jsonencode;
+    }
+
     public function getAllFilms()
     {
         $this->load->database();

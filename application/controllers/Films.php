@@ -15,7 +15,6 @@ class Films extends CI_Controller {
         $query = $this->db->query($sql);
         $cats = $query->result();
         $cats_jsonencode = json_encode($cats);
-        $cats_jsondecode = json_decode($cats_jsonencode);
 
         echo $cats_jsonencode;
     }
@@ -27,7 +26,6 @@ class Films extends CI_Controller {
         $query = $this->db->query($sql);
         $films = $query->result();
         $films_jsonencode = json_encode($films);
-        $films_jsondecode = json_decode($films_jsonencode);
 
         echo $films_jsonencode;
     }
@@ -35,11 +33,10 @@ class Films extends CI_Controller {
     public function getFilmsByCategory($cat_id)
     {
         $this->load->database();
-        $sql = "Select f.id as id, f.name as name, f.time as time, f.url as url from films as f, categories as c, links as l where f.id = l.film_id AND c.id = l.cat_id AND c.id = $cat_id";
+        $sql = "Select f.id as id, f.name as name, f.time as time, f.url as url, f.detail as detail from films as f, categories as c, links as l where f.id = l.film_id AND c.id = l.cat_id AND c.id = $cat_id";
         $query = $this->db->query($sql);
         $films = $query->result();
         $films_jsonencode = json_encode($films);
-        $films_jsondecode = json_decode($films_jsonencode);
 
         echo $films_jsonencode;
     }
